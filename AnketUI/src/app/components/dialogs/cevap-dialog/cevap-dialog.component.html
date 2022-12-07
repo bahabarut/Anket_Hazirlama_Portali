@@ -1,0 +1,25 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <span>{{dialogBaslik}}</span>
+</mat-toolbar>
+<div class="container">                       
+  <form [formGroup]="frm">
+
+    <!--Soru seçici-->    
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Soru</mat-label>
+      <mat-select placeholder="Soru Seçiniz" formControlName="CevapSoruId" required>
+        <mat-option [value]="sor.SoruId" *ngFor="let sor of sorular">{{sor.Soru}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <!--Cevap metni kısmı-->  
+    <mat-form-field appearance="outline" style="width: 100%;">
+      <mat-label>Cevap</mat-label>
+      <input matInput placeholder="Cevap" formControlName="Cevap" required >
+    </mat-form-field>
+  </form>
+</div>
+<p>&nbsp;</p>
+<button mat-raised-button color="primary" (click)="dialogRef.close(frm.value)" [disabled]="frm.invalid">Kaydet</button>&nbsp;
+<button mat-raised-button color="warn" (click)="dialogRef.close()" >İptal</button>&nbsp;

@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AnketDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TAnket">
+          <Key>
+            <PropertyRef Name="AnketId" />
+          </Key>
+          <Property Name="AnketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnketAdi" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TCevap">
+          <Key>
+            <PropertyRef Name="CevapId" />
+          </Key>
+          <Property Name="CevapId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cevap" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CevapSoruId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TKategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KategoriTuru" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TSoru">
+          <Key>
+            <PropertyRef Name="SoruId" />
+          </Key>
+          <Property Name="SoruId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Soru" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="SoruKategoriId" Type="int" Nullable="false" />
+          <Property Name="SoruAnketId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TUye">
+          <Key>
+            <PropertyRef Name="UyeId" />
+          </Key>
+          <Property Name="UyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="AdSoyad" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Mail" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Admin" Type="int" Nullable="false" />
+          <Property Name="UyeCevapId" Type="int" />
+          <Property Name="UyeSoruId" Type="int" />
+        </EntityType>
+        <Association Name="FK_TCevap_ToTSoru">
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="1" />
+          <End Role="TCevap" Type="Self.TCevap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSoru">
+              <PropertyRef Name="SoruId" />
+            </Principal>
+            <Dependent Role="TCevap">
+              <PropertyRef Name="CevapSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TSoru_ToTAnket">
+          <End Role="TAnket" Type="Self.TAnket" Multiplicity="1" />
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAnket">
+              <PropertyRef Name="AnketId" />
+            </Principal>
+            <Dependent Role="TSoru">
+              <PropertyRef Name="SoruAnketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TSoru_ToTKategoriId">
+          <End Role="TKategori" Type="Self.TKategori" Multiplicity="1" />
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TKategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="TSoru">
+              <PropertyRef Name="SoruKategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TUye_ToTCevap">
+          <End Role="TCevap" Type="Self.TCevap" Multiplicity="0..1" />
+          <End Role="TUye" Type="Self.TUye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TCevap">
+              <PropertyRef Name="CevapId" />
+            </Principal>
+            <Dependent Role="TUye">
+              <PropertyRef Name="UyeCevapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TUye_ToTSoru">
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="0..1" />
+          <End Role="TUye" Type="Self.TUye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSoru">
+              <PropertyRef Name="SoruId" />
+            </Principal>
+            <Dependent Role="TUye">
+              <PropertyRef Name="UyeSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AnketDBModelStoreContainer">
+          <EntitySet Name="TAnket" EntityType="Self.TAnket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TCevap" EntityType="Self.TCevap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TKategori" EntityType="Self.TKategori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TSoru" EntityType="Self.TSoru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TUye" EntityType="Self.TUye" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TCevap_ToTSoru" Association="Self.FK_TCevap_ToTSoru">
+            <End Role="TSoru" EntitySet="TSoru" />
+            <End Role="TCevap" EntitySet="TCevap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TSoru_ToTAnket" Association="Self.FK_TSoru_ToTAnket">
+            <End Role="TAnket" EntitySet="TAnket" />
+            <End Role="TSoru" EntitySet="TSoru" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TSoru_ToTKategoriId" Association="Self.FK_TSoru_ToTKategoriId">
+            <End Role="TKategori" EntitySet="TKategori" />
+            <End Role="TSoru" EntitySet="TSoru" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TUye_ToTCevap" Association="Self.FK_TUye_ToTCevap">
+            <End Role="TCevap" EntitySet="TCevap" />
+            <End Role="TUye" EntitySet="TUye" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TUye_ToTSoru" Association="Self.FK_TUye_ToTSoru">
+            <End Role="TSoru" EntitySet="TSoru" />
+            <End Role="TUye" EntitySet="TUye" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AnketDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TAnket">
+          <Key>
+            <PropertyRef Name="AnketId" />
+          </Key>
+          <Property Name="AnketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnketAdi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TSoru" Relationship="Self.FK_TSoru_ToTAnket" FromRole="TAnket" ToRole="TSoru" />
+        </EntityType>
+        <EntityType Name="TCevap">
+          <Key>
+            <PropertyRef Name="CevapId" />
+          </Key>
+          <Property Name="CevapId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cevap" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CevapSoruId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TSoru" Relationship="Self.FK_TCevap_ToTSoru" FromRole="TCevap" ToRole="TSoru" />
+          <NavigationProperty Name="TUye" Relationship="Self.FK_TUye_ToTCevap" FromRole="TCevap" ToRole="TUye" />
+        </EntityType>
+        <EntityType Name="TKategori">
+          <Key>
+            <PropertyRef Name="KategoriId" />
+          </Key>
+          <Property Name="KategoriId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KategoriTuru" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TSoru" Relationship="Self.FK_TSoru_ToTKategoriId" FromRole="TKategori" ToRole="TSoru" />
+        </EntityType>
+        <EntityType Name="TSoru">
+          <Key>
+            <PropertyRef Name="SoruId" />
+          </Key>
+          <Property Name="SoruId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Soru" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SoruKategoriId" Type="Int32" Nullable="false" />
+          <Property Name="SoruAnketId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TAnket" Relationship="Self.FK_TSoru_ToTAnket" FromRole="TSoru" ToRole="TAnket" />
+          <NavigationProperty Name="TCevap" Relationship="Self.FK_TCevap_ToTSoru" FromRole="TSoru" ToRole="TCevap" />
+          <NavigationProperty Name="TKategori" Relationship="Self.FK_TSoru_ToTKategoriId" FromRole="TSoru" ToRole="TKategori" />
+          <NavigationProperty Name="TUye" Relationship="Self.FK_TUye_ToTSoru" FromRole="TSoru" ToRole="TUye" />
+        </EntityType>
+        <EntityType Name="TUye">
+          <Key>
+            <PropertyRef Name="UyeId" />
+          </Key>
+          <Property Name="UyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AdSoyad" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mail" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Admin" Type="Int32" Nullable="false" />
+          <Property Name="UyeCevapId" Type="Int32" />
+          <Property Name="UyeSoruId" Type="Int32" />
+          <NavigationProperty Name="TCevap" Relationship="Self.FK_TUye_ToTCevap" FromRole="TUye" ToRole="TCevap" />
+          <NavigationProperty Name="TSoru" Relationship="Self.FK_TUye_ToTSoru" FromRole="TUye" ToRole="TSoru" />
+        </EntityType>
+        <Association Name="FK_TSoru_ToTAnket">
+          <End Role="TAnket" Type="Self.TAnket" Multiplicity="1" />
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAnket">
+              <PropertyRef Name="AnketId" />
+            </Principal>
+            <Dependent Role="TSoru">
+              <PropertyRef Name="SoruAnketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TCevap_ToTSoru">
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="1" />
+          <End Role="TCevap" Type="Self.TCevap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSoru">
+              <PropertyRef Name="SoruId" />
+            </Principal>
+            <Dependent Role="TCevap">
+              <PropertyRef Name="CevapSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TUye_ToTCevap">
+          <End Role="TCevap" Type="Self.TCevap" Multiplicity="0..1" />
+          <End Role="TUye" Type="Self.TUye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TCevap">
+              <PropertyRef Name="CevapId" />
+            </Principal>
+            <Dependent Role="TUye">
+              <PropertyRef Name="UyeCevapId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TSoru_ToTKategoriId">
+          <End Role="TKategori" Type="Self.TKategori" Multiplicity="1" />
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TKategori">
+              <PropertyRef Name="KategoriId" />
+            </Principal>
+            <Dependent Role="TSoru">
+              <PropertyRef Name="SoruKategoriId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TUye_ToTSoru">
+          <End Role="TSoru" Type="Self.TSoru" Multiplicity="0..1" />
+          <End Role="TUye" Type="Self.TUye" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TSoru">
+              <PropertyRef Name="SoruId" />
+            </Principal>
+            <Dependent Role="TUye">
+              <PropertyRef Name="UyeSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AnketDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TAnket" EntityType="Self.TAnket" />
+          <EntitySet Name="TCevap" EntityType="Self.TCevap" />
+          <EntitySet Name="TKategori" EntityType="Self.TKategori" />
+          <EntitySet Name="TSoru" EntityType="Self.TSoru" />
+          <EntitySet Name="TUye" EntityType="Self.TUye" />
+          <AssociationSet Name="FK_TSoru_ToTAnket" Association="Self.FK_TSoru_ToTAnket">
+            <End Role="TAnket" EntitySet="TAnket" />
+            <End Role="TSoru" EntitySet="TSoru" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TCevap_ToTSoru" Association="Self.FK_TCevap_ToTSoru">
+            <End Role="TSoru" EntitySet="TSoru" />
+            <End Role="TCevap" EntitySet="TCevap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TUye_ToTCevap" Association="Self.FK_TUye_ToTCevap">
+            <End Role="TCevap" EntitySet="TCevap" />
+            <End Role="TUye" EntitySet="TUye" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TSoru_ToTKategoriId" Association="Self.FK_TSoru_ToTKategoriId">
+            <End Role="TKategori" EntitySet="TKategori" />
+            <End Role="TSoru" EntitySet="TSoru" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TUye_ToTSoru" Association="Self.FK_TUye_ToTSoru">
+            <End Role="TSoru" EntitySet="TSoru" />
+            <End Role="TUye" EntitySet="TUye" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AnketDBModelStoreContainer" CdmEntityContainer="AnketDBEntities">
+          <EntitySetMapping Name="TAnket">
+            <EntityTypeMapping TypeName="AnketDBModel.TAnket">
+              <MappingFragment StoreEntitySet="TAnket">
+                <ScalarProperty Name="AnketId" ColumnName="AnketId" />
+                <ScalarProperty Name="AnketAdi" ColumnName="AnketAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TCevap">
+            <EntityTypeMapping TypeName="AnketDBModel.TCevap">
+              <MappingFragment StoreEntitySet="TCevap">
+                <ScalarProperty Name="CevapId" ColumnName="CevapId" />
+                <ScalarProperty Name="Cevap" ColumnName="Cevap" />
+                <ScalarProperty Name="CevapSoruId" ColumnName="CevapSoruId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TKategori">
+            <EntityTypeMapping TypeName="AnketDBModel.TKategori">
+              <MappingFragment StoreEntitySet="TKategori">
+                <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+                <ScalarProperty Name="KategoriTuru" ColumnName="KategoriTuru" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TSoru">
+            <EntityTypeMapping TypeName="AnketDBModel.TSoru">
+              <MappingFragment StoreEntitySet="TSoru">
+                <ScalarProperty Name="SoruId" ColumnName="SoruId" />
+                <ScalarProperty Name="Soru" ColumnName="Soru" />
+                <ScalarProperty Name="SoruKategoriId" ColumnName="SoruKategoriId" />
+                <ScalarProperty Name="SoruAnketId" ColumnName="SoruAnketId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TUye">
+            <EntityTypeMapping TypeName="AnketDBModel.TUye">
+              <MappingFragment StoreEntitySet="TUye">
+                <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Admin" ColumnName="Admin" />
+                <ScalarProperty Name="UyeCevapId" ColumnName="UyeCevapId" />
+                <ScalarProperty Name="UyeSoruId" ColumnName="UyeSoruId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

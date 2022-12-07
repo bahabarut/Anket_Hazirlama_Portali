@@ -1,0 +1,21 @@
+<div class="container">
+
+    <h1><b>Son Anketler</b></h1>
+    <button mat-raised-button color="primary" (click)="EkleAnket()">Yeni Anket</button>&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button color="primary" [routerLink]="['/anket']">Anketler</button>
+    <br><br>
+    <div *ngFor="let anket of anketler">
+        <h3>{{anket.AnketAdi}}</h3>
+    </div>
+    <hr>
+    <h1><b>Son Sorular</b></h1>
+    <button mat-raised-button color="primary" (click)="EkleSoru()">Yeni Soru</button>&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button color="primary" [routerLink]="['/soru']">Sorular</button>&nbsp;&nbsp;&nbsp;
+    <button mat-raised-button color="accent" (click)="EkleCevap()">Cevapla</button>
+
+
+    <br><br>
+    <div *ngFor="let soru of sorular">
+        <h3>{{soru.Soru}}</h3>
+    </div>
+</div>

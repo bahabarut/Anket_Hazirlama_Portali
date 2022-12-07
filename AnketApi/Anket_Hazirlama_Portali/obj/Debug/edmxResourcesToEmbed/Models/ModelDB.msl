@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AnketDBModelStoreContainer" CdmEntityContainer="AnketDBEntities">
+    <EntitySetMapping Name="TAnket">
+      <EntityTypeMapping TypeName="AnketDBModel.TAnket">
+        <MappingFragment StoreEntitySet="TAnket">
+          <ScalarProperty Name="AnketId" ColumnName="AnketId" />
+          <ScalarProperty Name="AnketAdi" ColumnName="AnketAdi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TCevap">
+      <EntityTypeMapping TypeName="AnketDBModel.TCevap">
+        <MappingFragment StoreEntitySet="TCevap">
+          <ScalarProperty Name="CevapId" ColumnName="CevapId" />
+          <ScalarProperty Name="Cevap" ColumnName="Cevap" />
+          <ScalarProperty Name="CevapSoruId" ColumnName="CevapSoruId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TKategori">
+      <EntityTypeMapping TypeName="AnketDBModel.TKategori">
+        <MappingFragment StoreEntitySet="TKategori">
+          <ScalarProperty Name="KategoriId" ColumnName="KategoriId" />
+          <ScalarProperty Name="KategoriTuru" ColumnName="KategoriTuru" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TSoru">
+      <EntityTypeMapping TypeName="AnketDBModel.TSoru">
+        <MappingFragment StoreEntitySet="TSoru">
+          <ScalarProperty Name="SoruId" ColumnName="SoruId" />
+          <ScalarProperty Name="Soru" ColumnName="Soru" />
+          <ScalarProperty Name="SoruKategoriId" ColumnName="SoruKategoriId" />
+          <ScalarProperty Name="SoruAnketId" ColumnName="SoruAnketId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TUye">
+      <EntityTypeMapping TypeName="AnketDBModel.TUye">
+        <MappingFragment StoreEntitySet="TUye">
+          <ScalarProperty Name="UyeId" ColumnName="UyeId" />
+          <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+          <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+          <ScalarProperty Name="Admin" ColumnName="Admin" />
+          <ScalarProperty Name="UyeCevapId" ColumnName="UyeCevapId" />
+          <ScalarProperty Name="UyeSoruId" ColumnName="UyeSoruId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
